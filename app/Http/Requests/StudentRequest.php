@@ -28,6 +28,7 @@ class StudentRequest extends FormRequest
             'name'=>'required| max:255|',
             'email'=>'required|unique:students|email',
             'phone'=>'required|digits:11|unique:students',
+            'image'=>'image|mimes:png,jpg',
             'department_id'=>'integer|max:255'
 
         ];

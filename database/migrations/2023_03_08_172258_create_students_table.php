@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name',50);
             $table->string('email')->unique();
             $table->char('phone',11)->unique();
+            $table->string('image');
+            $table->softDeletes();
             $table->tinyInteger('department_id')->unsigned();
             $table->foreign('department_id')->references('id')->on('departments');
             $table->timestamps();

@@ -34,6 +34,11 @@
                 <strong class="card-title">Students</strong>
             </div>
             <div class="card-body">
+                @if(\Illuminate\Support\Facades\Session::has('msg'))
+                    <div class="alert alert-success">
+                        {{ \Illuminate\Support\Facades\Session::get('msg') }}
+                    </div>
+                @endif
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
@@ -56,8 +61,12 @@
 
                         <td>
                             <a href="{{ route('students.show',$student->id) }}" style="color:red">show</a>
-                            <a href="#" style="color:red">delete</a>
                             <a href="{{ route('students.edit',$student->id) }}" style="color:lightgreen">edit</a>
+                            <form action="{{ route('students.destroy',$student->id) }}" method="post"
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="delete">
+                            </form>
                         </td>
                     </tr>
                     @endforeach

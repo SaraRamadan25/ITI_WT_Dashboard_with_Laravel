@@ -40,11 +40,17 @@ class StudentController extends Controller
      */
     public function store(StudentRequest $request)
     {
+        $img = $request->file('image'); //tmp
+        $ext = $img->getClientOriginalExtension();
+        $image_name = "student-$request->id.$ext";
+        $img->move(public_path('images/students'),$image_name);
+
         Student::create([
             'id'=>$request->id,
             'name'=>$request->name,
             'email'=>$request->email,
             'phone'=>$request->phone,
+            'image'=>$image_name,
             'department_id'=>$request->department
 
         ]);
@@ -105,6 +111,27 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $student = Student::findOrFail($id);
+        $student->delete();
+        return redirect(route('students.index'))->with('msg','student deleted successfully');
+
+    }
+    public function archive()
+    {
+        $students = Student::onlyTrashed()->get();
+        return view('admin.students.archive',compact('students'));
+    }
+
+    public function restore($id)
+    {
+        $student = Student::withTrashed()->findOrFail($id);
+        $student->restore();
+        return redirect(route('students.index'))->with('msg','restored successfully');
+    }
+    public function forceDestroy($id): \Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
+    {
+        $student = Student::withTrashed()->findOrFail($id);
+        $student->forceDelete();
+        return redirect(route('students.index'))->with('msg','permanently deleted successfully');
     }
 }
