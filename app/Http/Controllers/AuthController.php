@@ -35,7 +35,7 @@ class AuthController extends Controller
             'password'=>'required',
         ]);
         $is_login = Auth::attempt(['email'=>$request->email,'password'=>$request->password]);
-        if ($is_login){
+        if ( ! $is_login){
             return redirect(route('auth.login'));
         }
         if (Auth::user()->is_admin == 0){

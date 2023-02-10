@@ -126,12 +126,12 @@ class StudentController extends Controller
     {
         $student = Student::withTrashed()->findOrFail($id);
         $student->restore();
-        return redirect(route('students.index'))->with('msg','restored successfully');
+        return redirect(route('students.index'))->with('msg','student restored successfully');
     }
     public function forceDestroy($id): \Illuminate\Routing\Redirector|\Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse
     {
         $student = Student::withTrashed()->findOrFail($id);
         $student->forceDelete();
-        return redirect(route('students.index'))->with('msg','permanently deleted successfully');
+        return redirect(route('students.archive'))->with('msg','student permanently deleted successfully');
     }
 }

@@ -1,7 +1,6 @@
 @extends('admin.layouts.master')
-@section('title','All Students')
-
 @section('breadcrumbs')
+@section('title','All Students')
 <div class="breadcrumbs">
     <div class="breadcrumbs-inner">
         <div class="row m-0">
@@ -42,33 +41,32 @@
                 <table class="table">
                     <thead class="thead-dark">
                     <tr>
-                        <th scope="col">Code</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col">Department</th>
-                        <th scope="col">actions</th>
+                        <th scope="col">id</th>
+                        <th scope="col">name</th>
+                        <th scope="col">email</th>
+                        <th scope="col">phone</th>
+                        <th scope="col">department</th>
+                        <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach($students as $student)
-                    <tr>
-                        <th scope="row">{{ $student->id }}</th>
-                        <td>{{ $student->name }}</td>
-                        <td>{{ $student->email }}</td>
-                        <td>{{ $student->phone }}</td>
-                        <td>{{ $student->department_id }}</td>
-
-                        <td>
-                            <a href="{{ route('students.show',$student->id) }}" style="color:red">show</a>
-                            <a href="{{ route('students.edit',$student->id) }}" style="color:lightgreen">edit</a>
-                            <form action="{{ route('students.destroy',$student->id) }}" method="post"
-                                @csrf
-                                @method('DELETE')
-                                <input type="submit" value="delete">
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <th scope="row">{{$student->id}}</th>
+                            <td>{{$student->name}}</td>
+                            <td>{{$student->email}}</td>
+                            <td>{{$student->phone}}</td>
+                            <td>{{$student->department_id}}</td>
+                            <td>
+                                <a href="{{route('students.show',$student->id)}}" style="color:lightblue">show</a>
+                                <a href="{{route('students.edit',$student->id)}}" style="color:lightgreen">edit</a>
+                                <form action="{{route('students.destroy',$student->id)}}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <input type="submit" style="color: red" value="delete">
+                                </form>
+                            </td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
